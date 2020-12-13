@@ -14997,7 +14997,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>It is our aim to compare the performance of our SVR with two other models: RandomForesetRegressor and Ridge, in terms of validation R2 scores. For RandomForestRegressor, we tuned two major hyperparameters of the regressor, namely, max_depth and n_estimators simultaneously. The results of hyperparameter optimization indicate that increasing both max_depth and n_estimators of the model improves the performance of the model over the training set continuously, however the validation scores are not improved significantly (changes in the order of  10−4 ). According to above results, the model is overfitting with our data as the gap between the train and test scores is large.</p>
+<p>We tuned two major hyperparameters of the <code>RandomForest</code> regressor, <code>max_depth</code> and <code>n_estimators</code>, simultaneously. The results of hyperparameter optimization indicate that increasing both <code>max_depth</code> and <code>n_estimators</code> of the model improves the performance of the model over the training set continuously, however the validation scores are not improved significantly (changes in the order of  $10^{-4}$ ). According to above results, the model is overfitting with our data as the gap between the train and test scores is large.</p>
 
 </div>
 </div>
@@ -15008,7 +15008,8 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Obviously, Random Forest is not a suitable model for our project. Based on our tuning result, the validation scores of Ridge and SVR are pretty close. Althouogh the validation score of Ridge is slightly higher compared with that of SVR, the gap between the validation score and training score is also higher in Ridge. Cinsidering the generalizations, we decided to use SVR(RBF kernel)  as our model to do the prediction.</p>
+<p>Obviously, Random Forest is not a suitable model for our project due to low validation score and severe overfitting. Between <code>Ridge</code> and <code>SVR</code>, <code>Ridge</code> has the highest validation score. Both <code>Ridge</code> and <code>SVR</code> appear to overfit, but the degree to which they overfit is similar. <br> 
+As a result, we choose <code>Ridge</code> as our best model among the three.</p>
 
 </div>
 </div>

@@ -9,7 +9,7 @@
 
 
 <style type="text/css">
-    pre { line-height: 125%; }
+    pre { line-height: 125%; margin: 0; }
 td.linenos pre { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
 td.linenos pre.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
@@ -14294,7 +14294,7 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>In this project, we look at the relationship between movie reviews and their IMDB scores (ranging from 0 ~ 10). Positive reviews are often related to high IMDB scores, while negative reviews indicate the opposite. While it is easy for humans to understand a piece of review and guess the scores, we wonder if machines could understand it as well. Furthermore, we would like to automate this process, so that given a bunch of movie reviews, we are able to predict their corresponding IMDB scores easily. <br></p>
-<p>In this project, most of the data wrangling in this project is powered by the <a href="#c4">pandas</a> (McKinney 2010) library. The machine learning models and frameworks utilize <a href="#c3">sklearn</a> (Pedregosa et al. 2011). We use Support Vector Regressor (SVR) as our prediction model. <br></p>
+<p>In this project, most of the data wrangling in this project is powered by the <a href="#c4">pandas</a> (McKinney 2010) library. The machine learning models and frameworks utilize <a href="#c3">sklearn</a> (Pedregosa et al. 2011). We use Ridge Regressor as our prediction model. <br></p>
 
 </div>
 </div>
@@ -14377,70 +14377,124 @@ a.anchor-link {
 Below are the top 10 most frequent words in the reviews:</p>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">freq</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results/top_20_frequent_words.csv&#39;</span><span class="p">)</span>
+<span class="n">freq</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Word</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>film</td>
+      <td>17220</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>movie</td>
+      <td>9868</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>like</td>
+      <td>7170</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>story</td>
+      <td>6923</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>director</td>
+      <td>5525</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>time</td>
+      <td>5373</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>just</td>
+      <td>4689</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>life</td>
+      <td>4302</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>good</td>
+      <td>3464</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>man</td>
+      <td>3392</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<table>
-<thead><tr>
-<th>Word</th>
-<th>Frequency</th>
-<th>Rank</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>the</td>
-<td>172557</td>
-<td>1</td>
-</tr>
-<tr>
-<td>of</td>
-<td>78038</td>
-<td>2</td>
-</tr>
-<tr>
-<td>and</td>
-<td>76392</td>
-<td>3</td>
-</tr>
-<tr>
-<td>to</td>
-<td>74239</td>
-<td>4</td>
-</tr>
-<tr>
-<td>is</td>
-<td>57547</td>
-<td>5</td>
-</tr>
-<tr>
-<td>in</td>
-<td>49646</td>
-<td>6</td>
-</tr>
-<tr>
-<td>that</td>
-<td>33476</td>
-<td>7</td>
-</tr>
-<tr>
-<td>it</td>
-<td>33061</td>
-<td>8</td>
-</tr>
-<tr>
-<td>as</td>
-<td>27536</td>
-<td>9</td>
-</tr>
-<tr>
-<td>with</td>
-<td>26852</td>
-<td>10</td>
-</tr>
-</tbody>
-</table>
-<p>As we can see, the most frequent words are often generic words such as prepositions and pronouns, which has little implication to our model learning. We might want to avoid overfitting to these words as we train our model. See the column transformer in the <a href="#4">Pre-processing</a> section.</p>
+<p>Note that when we use sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">CountVectorizer</a> to generate the word counts, we discarded the most frequent literals such as "the", "an", and so on by using the <code>stop_words='English'</code> argument. This allows us to ignore frequently used but meaningless words in English, as they have little implication to our ML model and could cause overfitting.</p>
 
 </div>
 </div>
@@ -14453,7 +14507,7 @@ Below are the top 10 most frequent words in the reviews:</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><img src="../results/histogram_rating_distribution.svg" alt="ratings_histo"></p>
-<p>The ratings seem roughly normally distributed, with a little skewness to the left. Most of the ratings cluster around 0.5 ~ 0.8.</p>
+<p>The ratings seem roughly normally distributed, with a little skewness to the left. Most of the ratings cluster around 5 ~ 8.</p>
 
 </div>
 </div>
@@ -14467,7 +14521,7 @@ A bar plot of <code>Text</code> length vs <code>Rating</code> is presented below
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><img src="../results/histogram_rating_vs_text_length.svg" alt="textlength_vs_rating"></p>
-<p>There doesn't seem to be a strong correlation between reviews length and rating. However, it is notable that for the most positive ratings (from 0.7 ~ 1.0), the reviews tend to be higher.</p>
+<p>There doesn't seem to be a strong correlation between reviews length and rating. However, it is notable that for the most positive ratings (from 7 ~ 10), the reviews tend to be higher.</p>
 
 </div>
 </div>
@@ -14489,9 +14543,9 @@ A bar plot of <code>Text</code> length vs <code>Rating</code> is presented below
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Column-Transformers">Column Transformers<a class="anchor-link" href="#Column-Transformers">&#182;</a></h2><p>Now we have three columns to transform before fitting - <code>Review</code>, <code>n_words</code> and <code>sentiment</code>. <br></p>
-<p><code>Review</code>: since it is text feature, we will use sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">CountVectorizer</a> to transform the text into bag of words. As mentioned in the EDA, since the most frequent words are often meaningless, we added <code>stop_words=20</code> argument into the vectorizer to exclude the top 20 most frequent words. <br>
-<code>n_words</code>: we standardize the data with sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">StandardScaler</a> to avoid its scaling effect on the estimators. <br>
-<code>sentiment</code>: since it is ordinal data, we utilize sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">OrdinalEncoder</a> to encode the ordinal data in one-hot style.</p>
+<p><code>Review</code>: since it is text feature, we will use sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">CountVectorizer</a> to transform the text into bag of words. As mentioned in the EDA, some of the most frequent words are often meaningless. We added <code>stop_words='English'</code> to ignore these common English words. <br>
+<code>n_words</code>: we standardize the data with sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">StandardScaler</a> to avoid its scaling effect on the estimator. <br>
+<code>sentiment</code>: since it is ordinal data, we utilize sklearn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">OrdinalEncoder</a> to encode the data with <a href="https://en.wikipedia.org/wiki/One-hot">one-hot method</a>.</p>
 
 </div>
 </div>
@@ -14530,15 +14584,15 @@ Below are comparative cross-validation scores of the 3 models.</p>
 <td>Ridge</td>
 <td>2.198422</td>
 <td>0.511951</td>
-<td>0.532790</td>
-<td>0.799778</td>
+<td>0.533365</td>
+<td>0.841871</td>
 </tr>
 <tr>
 <td>SVR</td>
 <td>28.988741</td>
 <td>8.086322</td>
-<td>0.469965</td>
-<td>0.723018</td>
+<td>0.453478</td>
+<td>0.714765</td>
 </tr>
 <tr>
 <td>RandomForestRegressor</td>
@@ -14554,7 +14608,7 @@ Below are comparative cross-validation scores of the 3 models.</p>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Winner:-Ridge">Winner: <code>Ridge</code><a class="anchor-link" href="#Winner:-Ridge">&#182;</a></h3><p>We selected <code>SVR</code> with a combindation of two considerations - cross-validation scores and the risk of overfitting. <code>SVR</code> was selected because it has a CV score comparable to the <code>Ridge</code> regressor, while having the least amount of overfitting. For more details on the model selection process, see <a href="../doc/model_selection.ipynb">this report</a>.</p>
+<h3 id="Winner:-Ridge">Winner: <code>Ridge</code><a class="anchor-link" href="#Winner:-Ridge">&#182;</a></h3><p>We selected <code>Ridge</code> with a combindation of two considerations - cross-validation scores and the risk of overfitting. <code>Ridge</code> was selected because it has the highest CV score. Although all three models show risk of overfitting, the degree to which <code>Ridge</code> and <code>SVR</code> overfit are around the same, while <code>RandomForest</code> is the worst. Therefore, we consider <code>Ridge</code> as best estimator. For more details on the model selection process, see <a href="https://ubc-mds.github.io/group_26/doc/model_comparison.html">the model comparison report</a>.</p>
 <p>Below is a detailed specification of our final model.</p>
 
 </div>
@@ -14564,7 +14618,7 @@ Below are comparative cross-validation scores of the 3 models.</p>
 <table>
 <thead><tr>
 <th>Model Name</th>
-<th>Hyperparameter - Gamma</th>
+<th>Hyperparameter - alpha</th>
 <th>Mean Fit Time</th>
 <th>Mean Scoring Time</th>
 <th>Mean CV Score</th>
@@ -14572,11 +14626,11 @@ Below are comparative cross-validation scores of the 3 models.</p>
 </thead>
 <tbody>
 <tr>
-<td>SVR</td>
-<td>0.0007</td>
-<td>28.988741s</td>
-<td>8.086322s</td>
-<td>0.469965</td>
+<td>Ridge</td>
+<td>500</td>
+<td>0.52s</td>
+<td>0.53s</td>
+<td>0.533365</td>
 </tr>
 </tbody>
 </table>
@@ -14596,12 +14650,10 @@ Below are comparative cross-validation scores of the 3 models.</p>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results/model_test_scores.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results/model_test_scores.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">scores</span>
 </pre></div>
 
@@ -14618,7 +14670,7 @@ Below are comparative cross-validation scores of the 3 models.</p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 
 
 
@@ -14666,8 +14718,8 @@ Below are comparative cross-validation scores of the 3 models.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="1.-$R^2$,-RMSE-Scores">1. <strong>$R^2$</strong>, RMSE Scores<a class="anchor-link" href="#1.-$R^2$,-RMSE-Scores">&#182;</a></h4><p>$R^2$ and RMSE (Root-mean-squared-error) are two common metrics for evaluating a regression model's accuracy. <br></p>
-<p>The obtained $R^2$ score for the test set is <strong>0.5037</strong>, which was comparable to, and even better than our validation score. <br>
-The RMSE score was <strong>1.2861</strong>. This seems large because it means our predicted score can have a margin of error of over 1.2 points.</p>
+<p>The obtained $R^2$ score for the test set is <strong>0.543102</strong>, which was comparable to, and even better than our validation score. <br>
+The RMSE score was <strong>1.234</strong>. This could be large because it means our predicted score can have a margin of error of over 1.2 points when our overall scale is only 0-10.</p>
 
 </div>
 </div>
@@ -14680,7 +14732,7 @@ The RMSE score was <strong>1.2861</strong>. This seems large because it means ou
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><img src="../results/true_vs_predict.svg" alt="true_vs_predict"></p>
-<blockquote><p>There is an obvious difference between the predicted ratings and true ratings. In the true ratings, people tend to give whole number rating, i.e. 0.3 instead of 0.3247. Our model did not capture that.</p>
+<blockquote><p>There is an obvious difference between the predicted ratings and true ratings. In the true ratings, people tend to give whole number rating, i.e. 3 instead of 3.247. Our model did not capture that.</p>
 </blockquote>
 <p>Despite that, most of the points are somewhat clustered around the identity line. This indicates that our model didn't seem to under-fit or over-fit.</p>
 
@@ -14701,7 +14753,7 @@ In fact, there are a few areas of improvement.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>We discarded the <code>Author</code> and <code>id</code> columns at the beginning. In fact, these columns may be influential features, especially <code>Author</code>. One major flaw of our dataset is that all reviews come from four critics. This makes it difficult to generalize to the broader audience. It would better if we can obtain reviews from the general audiences. </li>
+<li>We discarded the <code>Author</code> and <code>id</code> columns at the beginning. In fact, these columns could be influential features, especially <code>Author</code>. However, an inherent issue with our dataset is that all reviews come from four critics (authors). Including it could add to the difficulties of generalizing our model to the broader audience. It would be ideal if we can obtain reviews from the general audience. </li>
 </ul>
 
 </div>
@@ -14725,7 +14777,7 @@ In fact, there are a few areas of improvement.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>The <code>sentiment</code> feature genereated with the NLTK  package contained only <code>neu</code> and <code>compound</code> in our dataset. This is confusing and we have yet to understand this behavior. We included the feature regardless because it may still provide useful information. However, this is definitely a place we need to investigate further into. </li>
+<li>The <code>sentiment</code> feature generated with the NLTK  package contained only <code>neu</code> and <code>compound</code> in our dataset. This is confusing and we have yet to understand this behavior. We included the feature regardless because it may still provide useful information. However, this is definitely a place we need to investigate further into. </li>
 </ul>
 
 </div>
