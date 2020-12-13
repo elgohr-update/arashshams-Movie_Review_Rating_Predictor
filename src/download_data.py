@@ -21,7 +21,13 @@ def main(url, out_file):
     Path(os.path.dirname(out_file)).mkdir(parents=True, exist_ok=True)
 
     # Download file from URL
-    urllib.request.urlretrieve(url, out_file)
+    try:
+        urllib.request.urlretrieve(url, out_file)
+    except Exception as e:
+        # While we know that catching all exceptions is not ideal, it's well-known that urllib have a
+        # pretty bad support for exception handling, so this is the best thing we can do here.
+        print(f'The following error occurs during file downloading: \n{str(e)}')
+        exit(-1)
 
 
 if __name__ == '__main__':

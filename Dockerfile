@@ -2,7 +2,7 @@
 # Authors: Yuanzhe Marco Ma, Arash Shamseddini, Kaicheng Tan, Zhenrui Yu
 # Nov.-Dec. 2020
 
-FROM continuumio/miniconda3
+FROM continuumio/miniconda3:4.9.2
 
 # Install system dependencies. (e.g. make)
 RUN apt-get update && \

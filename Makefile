@@ -37,10 +37,12 @@ doc/imdb_rating_predict_report.html: results/model_test_scores.csv results/true_
 doc/imdb_rating_predict_report.html:
 	jupyter nbconvert --to notebook --inplace --execute doc/imdb_rating_predict_report.ipynb
 	jupyter nbconvert --to html doc/imdb_rating_predict_report.ipynb
-    
+
+# Generate report for model comparison
 doc/model_comparison.html:
 	jupyter nbconvert --to html doc/model_comparison.ipynb
 
+# Generate dependency diagram for Makefile
 results/dependency_diagram_makefile.png: Makefile
 	makefile2graph > Makefile.dot
 	dot -Tpng Makefile.dot -o results/dependency_diagram_makefile.png
